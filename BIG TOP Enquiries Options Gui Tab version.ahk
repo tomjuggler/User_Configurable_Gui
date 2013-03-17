@@ -102,21 +102,28 @@ EnvSub, Clipboard, 1 ;subtracts 1
 sleep, 100
 
 run, %path%
-msgbox, %path%
+sleep, 200
+WinGet, active_id, ID, A
+;WinMaximize, ahk_id %active_id% ;test code - maximizes window
+;MsgBox, The active window's ID is "%active_id%". test code
 
-/*
+
 winwait, ahk_class #32770
 send, y 
-winwait, BT feedback  template ;how to get this from path?
-WinMaximize ; use the window found above
+sleep, 200
+WinGet, active_id, ID, A
+;WinMaximize, ahk_id %active_id% ;test code - maximizes window
+;MsgBox, The active window's ID is "%active_id%". test code
+winwait, ahk_id %active_id% ;********************************using window id from WinGet**********************************
+WinMaximize, ahk_id %active_id%; use the window found above
 
 ;START OF NON-OPTIMAL CODE
 
 SLEEP, 1000
 
-WinWait, BT feedback  template, 
-IfWinNotActive, BT feedback  template, , WinActivate, BT feedback  template, 
-WinWaitActive, BT feedback  template, 
+WinWait, ahk_id %active_id%, 
+IfWinNotActive, ahk_id %active_id%, , WinActivate, ahk_id %active_id%, 
+WinWaitActive, ahk_id %active_id%, 
 sleep, 400
 MouseClick, left,  389,  40
 Sleep, 100
