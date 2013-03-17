@@ -33,8 +33,10 @@ Return
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    BUTTONS SECTION  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ButtonCORPORATEADULTENQUIRY:
-MsgBox, corp adult enq
-;close gui after launching mail merge template?
+IniRead, path, paths.ini , CORPORATEADULTENQUIRY_path, key ;path of mail merge into variable "path"
+Gosub, MailMergeMacro 
+;MsgBox, corp adult enq
+ExitApp ;close gui after launching mail merge template
 Return
 
 ButtonCHANGECORPADULTENQPATH:
@@ -78,16 +80,57 @@ Return
 
 
 PathChooser: ; should set "path" variable to the mail merge path
-
+FileSelectFile, path , 3, C:\Dropbox\Big Top Entertainment\Templates , Select the Mail Merge to use for this (variable here) option! , ; "path" variable is set to path of selected mail merge!
 gosub, PathWriter
 
 return
 
 
-PathWriter: ; should take variable "path" and iniwrite to the correct slot.  
-
+PathWriter: ; should take variable "path" and iniwrite to the correct slot. Use If Else to get correct .ini list item  
+IniWrite, %path%, paths.ini , CORPORATEADULTENQUIRY_path, key
 return
 
+MailMergeMacro:
+
+
+
+xl :=   ComObj("Excel.Application")
+;MsgBox % xl.ActiveCell.Row
+clipboard = % xl.ActiveCell.Row 
+EnvSub, Clipboard, 1 ;subtracts 1 
+; paste and you get the active row!!!!!
+sleep, 100
+
+run, %path%
+msgbox, %path%
+
+/*
+winwait, ahk_class #32770
+send, y 
+winwait, BT feedback  template ;how to get this from path?
+WinMaximize ; use the window found above
+
+;START OF NON-OPTIMAL CODE
+
+SLEEP, 1000
+
+WinWait, BT feedback  template, 
+IfWinNotActive, BT feedback  template, , WinActivate, BT feedback  template, 
+WinWaitActive, BT feedback  template, 
+sleep, 400
+MouseClick, left,  389,  40
+Sleep, 100
+MouseClick, left,  785,  68
+Sleep, 1000
+MouseClick, left,  785,  68
+Send, {CTRLDOWN}v{CTRLUP}
+Sleep, 100
+MouseClick, left,  692,  89
+Sleep, 200
+ExitApp
+*/
+
+return
 
 ;Menu, tray, add  ; Creates a separator line.
 ;Menu, tray, add, Item1, MenuHandler  ; Creates a new menu item.
@@ -97,7 +140,7 @@ return
 ;MsgBox You selected %A_ThisMenuItem% from menu %A_ThisMenu%.
 ;return
  
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;   END: FINAL CLEANUP ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 GuiClose:
 ExitApp
