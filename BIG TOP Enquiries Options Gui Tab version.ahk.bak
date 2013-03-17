@@ -1,11 +1,3 @@
-; Author:         Tom Hastings
-; customize this template by editing "ShellNew\Template.ahk" in Windows folder
-#SingleInstance
-#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
-SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
-SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
-SetTitleMatchMode, 2 ;any part of wintitle is detected
-
 
 Gui, Font, s16  ; Set a large font size (32-point)., 
 Gui, Add, Tab, x12 y10 w1190 h500 , Corporate Adult|Corporate Family|Fire Electric|School Charity Church|Wedding|Private|Mostly Jazz|Misc Other
