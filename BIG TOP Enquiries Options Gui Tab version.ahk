@@ -7,12 +7,22 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 SetTitleMatchMode, 2 ;any part of wintitle is detected
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;      GUI Section Auto Execute       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Setting up vars:
+IniRead, Button1Title, paths.ini , Button1Title, key
+Gosub, GUIStart
+return
 
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;GUI SECTION;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+GUIStart:
 Gui, Font, s16  ; Set a large font size (32-point)., 
 Gui, Add, Tab, x12 y10 w1190 h500 , Corporate Adult|Corporate Family|Fire Electric|School Charity Church|Wedding|Private|Mostly Jazz|Misc Other
 Gui, Tab, Corporate Adult
-Gui, Add, Button, x42 y100 w200 h70 ,  CORPORATE ADULT ENQUIRY ;1
-Gui, Add, Button, x300 y100 w200 h80 , CHANGE CORP ADULT ENQ PATH ;path change
+; user can change button titles variable now
+Gui, Add, Button, x42 y100 w200 h70 gButton1 ,  %Button1Title%  ;1
+Gui, Add, GroupBox, x295 y80 w400 h300, Change Paths and Rename Buttons
+Gui, Add, Button, x300 y120 w100 h40 gButtonCHANGE1 , CHANGE ; path change button
 Gui, Add, Button, x42 y220 w230 h90 , CORPORATE ADULT ENQUIRY (WITH TOM SPECIFIC INFO) ;2
 Gui, Tab, Corporate Family
 Gui, Add, Button, x92 y120 w300 h110 , CORPORATE FAMILY ENQUIRY ;3
@@ -28,26 +38,39 @@ Gui, Tab, Private
 Gui, Add, Button, x52 y120 w370 h100 , PRIVATE ENQUIRY ;9
 ; Generated using SmartGUI Creator 4.0
 Gui, Show, x40 y 51 h560 w1223, BIG TOP ENTERTAINMENT email template options
-Return
+return
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    BUTTONS SECTION  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-ButtonCORPORATEADULTENQUIRY:
-IniRead, path, paths.ini , CORPORATEADULTENQUIRY_path, key ;loads path of mail merge into variable "path"
-sleep, 50
-Gosub, MailMergeMacro 
-;MsgBox, corp adult enq
-ExitApp ;close gui after launching mail merge template
-Return
 
-ButtonCHANGECORPADULTENQPATH:
+Button1:
+IniRead, path, paths.ini , Button1_path, key ;path of mail merge into variable "path"
+gosub, MailMergeMacro
+ExitApp
+return
+
+ButtonCHANGE1:
+inikey = Button1_path ; FOR PATH WRITER FUNCTION TO KNOW WHERE YOU CAME FROM and which .ini setting to change
 Gosub, PathChooser
+sleep, 40
+inikey = Button1Title ; ditto above this time button title gets changed
+gosub, UserButtonChanger
+If path != 					; if a mail merge is chosen (path variable is not blank)
+	{
+	Reload
+	}
+Else 
+	{
+	return					; if nothing chosen do nothing
+	}
 Return
-
 
 ButtonCORPORATEADULTENQUIRY(WITHTOMSPECIFICINFO):
 MsgBox, corp adult tom specific
 Return
+
+Button2:
+return
 
 ButtonCORPORATEFAMILYENQUIRY:
 MsgBox, CORPORATE FAMILY ENQUIRY
@@ -79,6 +102,12 @@ Return
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;   MAIN FUNCTIONS  ;;;;;;;;;;;;;;;;;;;;;;;;;;;; ;;;;;;;;;;;;;;;;;;;;;;;;; ;;;;;;;;;;;;;   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+UserButtonChanger:
+;INIWRITE BUTTON NAME
+InputBox, path , choose the button name
+Gosub, PathWriter
+return
+
 
 PathChooser: ; should set "path" variable to the mail merge path
 FileSelectFile, path , 3, C:\Dropbox\Big Top Entertainment\Templates , Select the Mail Merge to use for this (variable here) option! , ; "path" variable is set to path of selected mail merge!
@@ -94,8 +123,8 @@ Else
 return
 
 
-PathWriter: ; should take variable "path" and iniwrite to the correct slot. Use If Else to get correct .ini list item  
-IniWrite, %path%, paths.ini , CORPORATEADULTENQUIRY_path, key
+PathWriter: ; should take variable "path" and iniwrite to the correct slot - shown by "inikey" var. 
+IniWrite, %path%, paths.ini , %inikey%, key
 return
 
 MailMergeMacro:
@@ -141,13 +170,7 @@ ExitApp
 
 return
 
-;Menu, tray, add  ; Creates a separator line.
-;Menu, tray, add, Item1, MenuHandler  ; Creates a new menu item.
-;return
 
-;MenuHandler:
-;MsgBox You selected %A_ThisMenuItem% from menu %A_ThisMenu%.
-;return
  
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;   END: FINAL CLEANUP ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
