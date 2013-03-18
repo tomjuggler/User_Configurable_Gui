@@ -34,6 +34,7 @@ Return
 
 ButtonCORPORATEADULTENQUIRY:
 IniRead, path, paths.ini , CORPORATEADULTENQUIRY_path, key ;path of mail merge into variable "path"
+sleep, 50
 Gosub, MailMergeMacro 
 ;MsgBox, corp adult enq
 ExitApp ;close gui after launching mail merge template
@@ -81,7 +82,14 @@ Return
 
 PathChooser: ; should set "path" variable to the mail merge path
 FileSelectFile, path , 3, C:\Dropbox\Big Top Entertainment\Templates , Select the Mail Merge to use for this (variable here) option! , ; "path" variable is set to path of selected mail merge!
-gosub, PathWriter
+If path != 					; if a mail merge is chosen (path variable is not blank)
+	{
+	gosub, PathWriter
+	}
+Else 
+	{
+	return					; if nothing chosen do nothing
+	}
 
 return
 
@@ -91,31 +99,25 @@ IniWrite, %path%, paths.ini , CORPORATEADULTENQUIRY_path, key
 return
 
 MailMergeMacro:
-
-
-
 xl :=   ComObj("Excel.Application")
 ;MsgBox % xl.ActiveCell.Row
 clipboard = % xl.ActiveCell.Row 
 EnvSub, Clipboard, 1 ;subtracts 1 
 ; paste and you get the active row!!!!!
 sleep, 100
-
 run, %path%
 sleep, 200
-WinGet, active_id, ID, A
-;WinMaximize, ahk_id %active_id% ;test code - maximizes window
-;MsgBox, The active window's ID is "%active_id%". test code
-
-
+;WinGet, active_id, ID, A
+;WinMaximize, ahk_id %active_id% 		; test code - maximizes window
+;MsgBox, The active window's ID is "%active_id%". ; test code
 winwait, ahk_class #32770
 send, y 
 sleep, 200
 WinGet, active_id, ID, A
 ;WinMaximize, ahk_id %active_id% ;test code - maximizes window
 ;MsgBox, The active window's ID is "%active_id%". test code
-winwait, ahk_id %active_id% ;********************************using window id from WinGet**********************************
-WinMaximize, ahk_id %active_id%; use the window found above
+winwait, ahk_id %active_id% ;********************** using window id from WinGet *****************
+WinMaximize, ahk_id %active_id%    ; use the window found above
 
 ;START OF NON-OPTIMAL CODE
 
