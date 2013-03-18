@@ -7,14 +7,22 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 SetTitleMatchMode, 2 ;any part of wintitle is detected
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;      GUI Section Auto Execute       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Setting up vars:
+IniRead, CorpAdultEnqButtonTitle, paths.ini , CORPORATEADULTENQUIRY_BUTTONTITLE, key
+Gosub, GUIStart
+return
 
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;GUI SECTION;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+GUIStart:
 Gui, Font, s16  ; Set a large font size (32-point)., 
 Gui, Add, Tab, x12 y10 w1190 h500 , Corporate Adult|Corporate Family|Fire Electric|School Charity Church|Wedding|Private|Mostly Jazz|Misc Other
 Gui, Tab, Corporate Adult
-; userbuttons here (from .ini?)
-Gui, Add, Button, x42 y100 w200 h70 ,  CORPORATE ADULT ENQUIRY ;1
-Gui, Add, GroupBox, x295 y80 w400 h300, CHANGE PATH
-Gui, Add, Button, x300 y100 w200 h80 , CHANGE CORP ADULT ENQ PATH ; path change button
+; user can change button titles variable now
+Gui, Add, Button, x42 y100 w200 h70 gButtonCORPORATEADULTENQUIRY ,  %CorpAdultEnqButtonTitle%  ;1
+Gui, Add, GroupBox, x295 y80 w400 h300, Change Paths and Rename Buttons
+Gui, Add, Button, x300 y120 w100 h40 , CHANGE ; path change button
 Gui, Add, Button, x42 y220 w230 h90 , CORPORATE ADULT ENQUIRY (WITH TOM SPECIFIC INFO) ;2
 Gui, Tab, Corporate Family
 Gui, Add, Button, x92 y120 w300 h110 , CORPORATE FAMILY ENQUIRY ;3
@@ -42,12 +50,21 @@ Gosub, MailMergeMacro
 ExitApp ;close gui after launching mail merge template
 Return
 
-ButtonCHANGECORPADULTENQPATH:
-Gosub, UserButtonAdder
-
-;Gosub, PathChooser
+ButtonCHANGE:
+inikey = CORPORATEADULTENQUIRY_path ; FOR PATH WRITER FUNCTION TO KNOW WHERE YOU CAME FROM and which .ini setting to change
+Gosub, PathChooser
+sleep, 40
+inikey = CORPORATEADULTENQUIRY_BUTTONTITLE ; ditto above this time button title gets changed
+gosub, UserButtonChanger
+If path != 					; if a mail merge is chosen (path variable is not blank)
+	{
+	Reload
+	}
+Else 
+	{
+	return					; if nothing chosen do nothing
+	}
 Return
-
 
 ButtonCORPORATEADULTENQUIRY(WITHTOMSPECIFICINFO):
 MsgBox, corp adult tom specific
@@ -83,8 +100,10 @@ Return
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;   MAIN FUNCTIONS  ;;;;;;;;;;;;;;;;;;;;;;;;;;;; ;;;;;;;;;;;;;;;;;;;;;;;;; ;;;;;;;;;;;;;   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-UserButtonAdder:
-;button name, placement, action, etc all need to be looked at, really hard!
+UserButtonChanger:
+;INIWRITE BUTTON NAME
+InputBox, path , choose the button name
+Gosub, PathWriter
 return
 
 
@@ -102,8 +121,8 @@ Else
 return
 
 
-PathWriter: ; should take variable "path" and iniwrite to the correct slot. Use If Else to get correct .ini list item  
-IniWrite, %path%, paths.ini , CORPORATEADULTENQUIRY_path, key
+PathWriter: ; should take variable "path" and iniwrite to the correct slot - shown by "inikey" var. 
+IniWrite, %path%, paths.ini , %inikey%, key
 return
 
 MailMergeMacro:
