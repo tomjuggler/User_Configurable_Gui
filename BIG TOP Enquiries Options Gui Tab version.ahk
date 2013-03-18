@@ -33,20 +33,28 @@ Gui, Tab, Corporate Adult
 ; user can change button titles variable now
 Gui, Add, Button, x42 y100 w200 h70 gButton1 ,  %Button1Title%  ;1
 Gui, Add, GroupBox, x295 y80 w400 h300, Change Paths and Rename Buttons
-Gui, Add, Button, x300 y120 w100 h40 gButtonCHANGE1 , CHANGE ; path change button
-Gui, Add, Button, x42 y220 w230 h90 , CORPORATE ADULT ENQUIRY (WITH TOM SPECIFIC INFO) ;2
+Gui, Add, Button, x300 y120 w100 h40 gButtonCHANGE1 , CHANGE ; path change button1
+Gui, Add, Button, x42 y220 w230 h90 gButton2 , %Button2Title% ;2
+Gui, Add, Button, x300 y220 w100 h40 gButtonCHANGE2 , CHANGE ; path change button2
 Gui, Tab, Corporate Family
-Gui, Add, Button, x92 y120 w300 h110 , CORPORATE FAMILY ENQUIRY ;3
+Gui, Add, Button, x92 y120 w300 h110 gButton3 , %Button3Title% ;3
+Gui, Add, Button, x500 y120 w100 h40 gButtonCHANGE3 , CHANGE ; path change button3
 Gui, Tab, Fire Electric
-Gui, Add, Button, x52 y110 w220 h80 , CORPORATE FIRE AND ELECTRIC ENQUIRY ;4
+Gui, Add, Button, x52 y110 w220 h80 gButton4 , %Button4Title% ;4
+Gui, Add, Button, x300 y110 w100 h40 gButtonCHANGE4 , CHANGE ; path change button4
 Gui, Tab, School Charity Church
-Gui, Add, Button, x32 y90 w380 h180 , SCHOOL CHARITY CHURCH FAMILY ENQUIRY QUOTE ;5
+Gui, Add, Button, x32 y90 w380 h180 gButton5 , %Button5Title% ;5
+Gui, Add, Button, x500 y100 w100 h40 gButtonCHANGE5 , CHANGE ; path change button5
 Gui, Tab, Wedding
-Gui, Add, Button, x32 y80 w350 h70 , WEDDING ENQUIRY ;6
-Gui, Add, Button, x22 y200 w330 h70 , WEDDING PLANNER ENQUIRY ;7
-Gui, Add, Button, x22 y320 w680 h90 , WEDDING PLANNER ENQUIRY (ZONE 1 KIDS ENTERTAINMENT ONLY) ;8
+Gui, Add, Button, x32 y80 w350 h70 gButton6 , %Button6Title% ;6
+Gui, Add, Button, x500 y80 w100 h40 gButtonCHANGE6 , CHANGE ; path change button6
+Gui, Add, Button, x22 y200 w330 h70 gButton7 , %Button7Title% ;7
+Gui, Add, Button, x500 y200 w100 h40 gButtonCHANGE7 , CHANGE ; path change button7
+Gui, Add, Button, x22 y320 w680 h90 gButton8 , %Button8Title%  ;8
+Gui, Add, Button, x800 y320 w100 h40 gButtonCHANGE8 , CHANGE ; path change button8
 Gui, Tab, Private
-Gui, Add, Button, x52 y120 w370 h100 , PRIVATE ENQUIRY ;9
+Gui, Add, Button, x52 y120 w370 h100 gButton9, %Button9Title% ;9
+Gui, Add, Button, x500 y120 w100 h40 gButtonCHANGE9 , CHANGE ; path change button9
 ; Generated using SmartGUI Creator 4.0
 Gui, Show, x40 y 51 h560 w1223, BIG TOP ENTERTAINMENT email template options
 return
@@ -76,39 +84,180 @@ Else
 	}
 Return
 
-ButtonCORPORATEADULTENQUIRY(WITHTOMSPECIFICINFO):
-MsgBox, corp adult tom specific
+Button2:
+IniRead, path, paths.ini , Button2_path, key ;this button mail merge path into variable "path"
+gosub, MailMergeMacro
+ExitApp
+return
+
+ButtonCHANGE2:
+inikey = Button2_path ; FOR PATH WRITER FUNCTION TO KNOW WHERE YOU CAME FROM and which .ini setting to change
+Gosub, PathChooser
+sleep, 40
+inikey = Button2Title ; ditto above this time button title gets changed
+gosub, UserButtonChanger
+If path != 					; if a mail merge is chosen (path variable is not blank)
+	{
+	Reload
+	}
+Else 
+	{
+	return					; if nothing chosen do nothing
+	}
 Return
 
-Button2:
+Button3:
+IniRead, path, paths.ini , Button3_path, key ;this button mail merge path into variable "path"
+gosub, MailMergeMacro
+ExitApp
 return
 
-ButtonCORPORATEFAMILYENQUIRY:
-MsgBox, CORPORATE FAMILY ENQUIRY
+ButtonCHANGE3:
+inikey = Button3_path ; FOR PATH WRITER FUNCTION TO KNOW WHERE YOU CAME FROM and which .ini setting to change
+Gosub, PathChooser
+sleep, 40
+inikey = Button3Title ; ditto above this time button title gets changed
+gosub, UserButtonChanger
+If path != 					; if a mail merge is chosen (path variable is not blank)
+	{
+	Reload
+	}
+Else 
+	{
+	return					; if nothing chosen do nothing
+	}
+Return
+
+Button4:
+IniRead, path, paths.ini , Button4_path, key ;this button mail merge path into variable "path"
+gosub, MailMergeMacro
+ExitApp
 return
 
-ButtonCORPORATEFIREANDELECTRICENQUIRY:
-MsgBox, CORPORATE FIRE AND ELECTRIC ENQUIRY
+ButtonCHANGE4:
+inikey = Button4_path ; FOR PATH WRITER FUNCTION TO KNOW WHERE YOU CAME FROM and which .ini setting to change
+Gosub, PathChooser
+sleep, 40
+inikey = Button4Title ; ditto above this time button title gets changed
+gosub, UserButtonChanger
+If path != 					; if a mail merge is chosen (path variable is not blank)
+	{
+	Reload
+	}
+Else 
+	{
+	return					; if nothing chosen do nothing
+	}
+Return
+
+Button5:
+IniRead, path, paths.ini , Button5_path, key ;this button mail merge path into variable "path"
+gosub, MailMergeMacro
+ExitApp
 return
 
-ButtonSCHOOLCHARITYCHURCHFAMILYENQUIRYQUOTE:
-MsgBox, CHURCH FAMILY ENQUIRY QUOTE
+ButtonCHANGE5:
+inikey = Button5_path ; FOR PATH WRITER FUNCTION TO KNOW WHERE YOU CAME FROM and which .ini setting to change
+Gosub, PathChooser
+sleep, 40
+inikey = Button5Title ; ditto above this time button title gets changed
+gosub, UserButtonChanger
+If path != 					; if a mail merge is chosen (path variable is not blank)
+	{
+	Reload
+	}
+Else 
+	{
+	return					; if nothing chosen do nothing
+	}
+Return
+
+Button6:
+IniRead, path, paths.ini , Button6_path, key ;this button mail merge path into variable "path"
+gosub, MailMergeMacro
+ExitApp
 return
 
-ButtonWEDDINGENQUIRY:
-MsgBox, WEDDING ENQUIRY
+ButtonCHANGE6:
+inikey = Button6_path ; FOR PATH WRITER FUNCTION TO KNOW WHERE YOU CAME FROM and which .ini setting to change
+Gosub, PathChooser
+sleep, 40
+inikey = Button6Title ; ditto above this time button title gets changed
+gosub, UserButtonChanger
+If path != 					; if a mail merge is chosen (path variable is not blank)
+	{
+	Reload
+	}
+Else 
+	{
+	return					; if nothing chosen do nothing
+	}
+Return
+
+Button7:
+IniRead, path, paths.ini , Button7_path, key ;this button mail merge path into variable "path"
+gosub, MailMergeMacro
+ExitApp
 return
 
-ButtonWEDDINGPLANNERENQUIRY:
-MsgBox, WEDDING PLANNER ENQUIRY
+ButtonCHANGE7:
+inikey = Button7_path ; FOR PATH WRITER FUNCTION TO KNOW WHERE YOU CAME FROM and which .ini setting to change
+Gosub, PathChooser
+sleep, 40
+inikey = Button7Title ; ditto above this time button title gets changed
+gosub, UserButtonChanger
+If path != 					; if a mail merge is chosen (path variable is not blank)
+	{
+	Reload
+	}
+Else 
+	{
+	return					; if nothing chosen do nothing
+	}
+Return
+
+Button8:
+IniRead, path, paths.ini , Button8_path, key ;this button mail merge path into variable "path"
+gosub, MailMergeMacro
+ExitApp
 return
 
-ButtonWEDDINGPLANNERENQUIRY(ZONE1KIDSENTERTAINMENTONLY):
-MsgBox, WEDDING PLANNER ENQUIRY (ZONE 1 KIDS ENTERTAINMENT ONLY)
+ButtonCHANGE8:
+inikey = Button8_path ; FOR PATH WRITER FUNCTION TO KNOW WHERE YOU CAME FROM and which .ini setting to change
+Gosub, PathChooser
+sleep, 40
+inikey = Button8Title ; ditto above this time button title gets changed
+gosub, UserButtonChanger
+If path != 					; if a mail merge is chosen (path variable is not blank)
+	{
+	Reload
+	}
+Else 
+	{
+	return					; if nothing chosen do nothing
+	}
+Return
+
+Button9:
+IniRead, path, paths.ini , Button9_path, key ;this button mail merge path into variable "path"
+gosub, MailMergeMacro
+ExitApp
 return
 
-ButtonPRIVATEENQUIRY:
-MsgBox, PRIVATE ENQUIRY
+ButtonCHANGE9:
+inikey = Button9_path ; FOR PATH WRITER FUNCTION TO KNOW WHERE YOU CAME FROM and which .ini setting to change
+Gosub, PathChooser
+sleep, 40
+inikey = Button9Title ; ditto above this time button title gets changed
+gosub, UserButtonChanger
+If path != 					; if a mail merge is chosen (path variable is not blank)
+	{
+	Reload
+	}
+Else 
+	{
+	return					; if nothing chosen do nothing
+	}
 Return
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;   MAIN FUNCTIONS  ;;;;;;;;;;;;;;;;;;;;;;;;;;;; ;;;;;;;;;;;;;;;;;;;;;;;;; ;;;;;;;;;;;;;   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
