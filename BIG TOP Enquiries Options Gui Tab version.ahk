@@ -8,7 +8,7 @@ SetTitleMatchMode, 2 ;any part of wintitle is detected
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;      GUI Section Auto Execute       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Setting up vars:
-IniRead, CorpAdultEnqButtonTitle, paths.ini , CORPORATEADULTENQUIRY_BUTTONTITLE, key
+IniRead, Button1Title, paths.ini , CORPORATEADULTENQUIRY_BUTTONTITLE, key
 Gosub, GUIStart
 return
 
@@ -20,9 +20,9 @@ Gui, Font, s16  ; Set a large font size (32-point).,
 Gui, Add, Tab, x12 y10 w1190 h500 , Corporate Adult|Corporate Family|Fire Electric|School Charity Church|Wedding|Private|Mostly Jazz|Misc Other
 Gui, Tab, Corporate Adult
 ; user can change button titles variable now
-Gui, Add, Button, x42 y100 w200 h70 gButtonCORPORATEADULTENQUIRY ,  %CorpAdultEnqButtonTitle%  ;1
+Gui, Add, Button, x42 y100 w200 h70 gButton1 ,  %CorpAdultEnqButtonTitle%  ;1
 Gui, Add, GroupBox, x295 y80 w400 h300, Change Paths and Rename Buttons
-Gui, Add, Button, x300 y120 w100 h40 , CHANGE ; path change button
+Gui, Add, Button, x300 y120 w100 h40 gButton2 , CHANGE1 ; path change button
 Gui, Add, Button, x42 y220 w230 h90 , CORPORATE ADULT ENQUIRY (WITH TOM SPECIFIC INFO) ;2
 Gui, Tab, Corporate Family
 Gui, Add, Button, x92 y120 w300 h110 , CORPORATE FAMILY ENQUIRY ;3
@@ -42,7 +42,7 @@ Return
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    BUTTONS SECTION  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-ButtonCORPORATEADULTENQUIRY:
+Button1:
 IniRead, path, paths.ini , CORPORATEADULTENQUIRY_path, key ;path of mail merge into variable "path"
 sleep, 50
 Gosub, MailMergeMacro 
@@ -50,7 +50,7 @@ Gosub, MailMergeMacro
 ExitApp ;close gui after launching mail merge template
 Return
 
-ButtonCHANGE:
+ButtonCHANGE1:
 inikey = CORPORATEADULTENQUIRY_path ; FOR PATH WRITER FUNCTION TO KNOW WHERE YOU CAME FROM and which .ini setting to change
 Gosub, PathChooser
 sleep, 40
