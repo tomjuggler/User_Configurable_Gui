@@ -11,7 +11,7 @@ SetTitleMatchMode, 2 ;any part of wintitle is detected
 Gui, Font, s16  ; Set a large font size (32-point)., 
 Gui, Add, Tab, x12 y10 w1190 h500 , Corporate Adult|Corporate Family|Fire Electric|School Charity Church|Wedding|Private|Mostly Jazz|Misc Other
 Gui, Tab, Corporate Adult
-; userbuttons here (from .ini)
+; userbuttons here (from .ini?)
 Gui, Add, Button, x42 y100 w200 h70 ,  CORPORATE ADULT ENQUIRY ;1
 Gui, Add, GroupBox, x295 y80 w400 h300, CHANGE PATH
 Gui, Add, Button, x300 y100 w200 h80 , CHANGE CORP ADULT ENQ PATH ; path change button
@@ -84,7 +84,7 @@ Return
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;   MAIN FUNCTIONS  ;;;;;;;;;;;;;;;;;;;;;;;;;;;; ;;;;;;;;;;;;;;;;;;;;;;;;; ;;;;;;;;;;;;;   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 UserButtonAdder:
-
+;button name, placement, action, etc all need to be looked at, really hard!
 return
 
 
