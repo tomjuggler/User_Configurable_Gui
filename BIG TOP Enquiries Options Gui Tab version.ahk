@@ -1,5 +1,13 @@
-; Author:         Tom Hastings
-; customize this template by editing "ShellNew\Template.ahk" in Windows folder
+
+; Author:         Tom Hastings (tomjuggler)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;Description;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ /*
+ User can change button title and function (which file the button opens) by use of an adjacent "change" button on GUI (saves to .ini file
+in script dir). Useful for frequently changed options and so that the dev(me) doesn't have to change the code every time a word doc is moved or renamed. MailMerge function is called upon pressing a button to automate the word mail merge process - word always expects you to send multiple emails from mail merge but we use it to send one at a time, so the active line on a spreadsheet is captured by ahk with COM and transferred to Word - I know you can probably do this with Microsoft tools but I prefer AHK to do my clicking around. 
+ */
+
+
 #SingleInstance
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
@@ -270,7 +278,7 @@ return
 
 
 PathChooser: ; should set "path" variable to the mail merge path
-FileSelectFile, path , 3, C:\Dropbox\Big Top Entertainment\Templates , Select the Mail Merge to use for this (variable here) option! , ; "path" variable is set to path of selected mail merge!
+FileSelectFile, path , 3, C:\Dropbox\Big Top Entertainment\Templates , Select the Mail Merge to use for this option! , ; "path" variable is set to path of selected mail merge!
 If path != 					; if a mail merge is chosen (path variable is not blank)
 	{
 	gosub, PathWriter
