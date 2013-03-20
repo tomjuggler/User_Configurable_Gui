@@ -43,6 +43,9 @@ IniRead, Button18Title, paths.ini , Button18Title, key
 IniRead, Button19Title, paths.ini , Button19Title, key
 IniRead, Button20Title, paths.ini , Button20Title, key
 IniRead, Button21Title, paths.ini , Button21Title, key
+IniRead, Button19Title, paths.ini , Button22Title, key
+IniRead, Button20Title, paths.ini , Button23Title, key
+IniRead, Button21Title, paths.ini , Button24Title, key
 Return
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;GUI SECTION;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -70,34 +73,41 @@ Gui, Add, Button, x22 y200 w330 h70 gButton8 , %Button8Title% ;8
 Gui, Add, Button, x500 y200 w100 h40 gButtonCHANGE8 , CHANGE ; path change button2
 Gui, Add, Button, x22 y320 w680 h90 gButton9 , %Button9Title%  ;9
 Gui, Add, Button, x800 y320 w100 h40 gButtonCHANGE9 , CHANGE ; path change button3
-Gui, Tab, Wedding
+Gui, Tab, School Charity Church
 Gui, Add, Button, x32 y80 w350 h70 gButton10 , %Button10Title% ;10
 Gui, Add, Button, x500 y80 w100 h40 gButtonCHANGE10 , CHANGE ; path change button10
 Gui, Add, Button, x22 y200 w330 h70 gButton11 , %Button11Title% ;11
 Gui, Add, Button, x500 y200 w100 h40 gButtonCHANGE11, CHANGE ; path change button11
 Gui, Add, Button, x22 y320 w680 h90 gButton12 , %Button8Title%  ;12
 Gui, Add, Button, x800 y320 w100 h40 gButtonCHANGE12 , CHANGE ; path change button12
-Gui, Tab, Private
+Gui, Tab, Wedding
 Gui, Add, Button, x32 y80 w350 h70 gButton13 , %Button1Title% ;13
 Gui, Add, Button, x500 y80 w100 h40 gButtonCHANGE13 , CHANGE ; path change button13
 Gui, Add, Button, x22 y200 w330 h70 gButton14, %Button2Title% ;14
 Gui, Add, Button, x500 y200 w100 h40 gButtonCHANGE14, CHANGE ; path change button14
 Gui, Add, Button, x22 y320 w680 h90 gButton15 , %Button3Title%  ;15
 Gui, Add, Button, x800 y320 w100 h40 gButtonCHANGE15 , CHANGE ; path change button15
-Gui, Tab, Mostly Jazz
+Gui, Tab, Private
 Gui, Add, Button, x32 y80 w350 h70 gButton16 , %Button1Title% ;16
 Gui, Add, Button, x500 y80 w100 h40 gButtonCHANGE16 , CHANGE ; path change button16
 Gui, Add, Button, x22 y200 w330 h70 gButton17 , %Button2Title% ;17
 Gui, Add, Button, x500 y200 w100 h40 gButtonCHANGE17 , CHANGE ; path change button17
 Gui, Add, Button, x22 y320 w680 h90 gButton18 , %Button3Title%  ;18
 Gui, Add, Button, x800 y320 w100 h40 gButtonCHANGE18 , CHANGE ; path change button18
-Gui, Tab, Misc Other
+Gui, Tab, Mostly Jazz
 Gui, Add, Button, x32 y80 w350 h70 gButton19 , %Button1Title% ;19
 Gui, Add, Button, x500 y80 w100 h40 gButtonCHANGE19, CHANGE ; path change button19
 Gui, Add, Button, x22 y200 w330 h70 gButton20 , %Button2Title% ;20
 Gui, Add, Button, x500 y200 w100 h40 gButtonCHANGE20, CHANGE ; path change button20
 Gui, Add, Button, x22 y320 w680 h90 gButton21 , %Button3Title%  ;21
 Gui, Add, Button, x800 y320 w100 h40 gButtonCHANGE21, CHANGE ; path change button21
+Gui, Tab, Misc Other
+Gui, Add, Button, x32 y80 w350 h70 gButton22 , %Button1Title% ;22
+Gui, Add, Button, x500 y80 w100 h40 gButtonCHANGE22, CHANGE ; path change button22
+Gui, Add, Button, x22 y200 w330 h70 gButton23 , %Button2Title% ;23
+Gui, Add, Button, x500 y200 w100 h40 gButtonCHANGE23, CHANGE ; path change button23
+Gui, Add, Button, x22 y320 w680 h90 gButton24 , %Button3Title%  ;24
+Gui, Add, Button, x800 y320 w100 h40 gButtonCHANGE24, CHANGE ; path change button24
 ; Generated using SmartGUI Creator 4.0
 Gui, Show, x40 y 51 h560 w1223, BIG TOP ENTERTAINMENT email template options
 return
@@ -556,6 +566,72 @@ inikey = Button21_path ; FOR PATH WRITER FUNCTION TO KNOW WHERE YOU CAME FROM an
 Gosub, PathChooser
 sleep, 40
 inikey = Button21Title ; ditto above this time button title gets changed
+gosub, UserButtonChanger
+If path != 					; if a mail merge is chosen (path variable is not blank)
+	{
+	Reload
+	}
+Else 
+	{
+	return					; if nothing chosen do nothing
+	}
+Return
+
+Button22:
+IniRead, path, paths.ini , Button22_path, key ;this button mail merge path into variable "path"
+gosub, MailMergeMacro
+ExitApp
+return
+
+ButtonCHANGE22:
+inikey = Button22_path ; FOR PATH WRITER FUNCTION TO KNOW WHERE YOU CAME FROM and which .ini setting to change
+Gosub, PathChooser
+sleep, 40
+inikey = Button22Title ; ditto above this time button title gets changed
+gosub, UserButtonChanger
+If path != 					; if a mail merge is chosen (path variable is not blank)
+	{
+	Reload
+	}
+Else 
+	{
+	return					; if nothing chosen do nothing
+	}
+Return
+
+Button23:
+IniRead, path, paths.ini , Button23_path, key ;this button mail merge path into variable "path"
+gosub, MailMergeMacro
+ExitApp
+return
+
+ButtonCHANGE23:
+inikey = Button23_path ; FOR PATH WRITER FUNCTION TO KNOW WHERE YOU CAME FROM and which .ini setting to change
+Gosub, PathChooser
+sleep, 40
+inikey = Button23Title ; ditto above this time button title gets changed
+gosub, UserButtonChanger
+If path != 					; if a mail merge is chosen (path variable is not blank)
+	{
+	Reload
+	}
+Else 
+	{
+	return					; if nothing chosen do nothing
+	}
+Return
+
+Button24:
+IniRead, path, paths.ini , Button24_path, key ;this button mail merge path into variable "path"
+gosub, MailMergeMacro
+ExitApp
+return
+
+ButtonCHANGE24:
+inikey = Button24_path ; FOR PATH WRITER FUNCTION TO KNOW WHERE YOU CAME FROM and which .ini setting to change
+Gosub, PathChooser
+sleep, 40
+inikey = Button24Title ; ditto above this time button title gets changed
 gosub, UserButtonChanger
 If path != 					; if a mail merge is chosen (path variable is not blank)
 	{
