@@ -3,8 +3,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;Description;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
  /*
- User can change button title and function (which file the button opens) by use of an adjacent "change" button on GUI (saves to .ini file
-in script dir). Useful for frequently changed options and so that the dev(me) doesn't have to change the code every time a word doc is moved or renamed. MailMerge function is called upon pressing a button to automate the word mail merge process - word always expects you to send multiple emails from mail merge but we use it to send one at a time, so the active line on a spreadsheet is captured by ahk with COM and transferred to Word - I know you can probably do this with Microsoft tools but I prefer AHK to do my clicking around. 
+ GUI program in which the User can change the button title and function (which file the button opens) by use of an adjacent "change" button on GUI (saves to paths.ini file in script directory). Useful for frequently changed options and so that the programmer (me) doesn't have to change the code every time a word doc is moved or renamed. The MailMerge function is called upon pressing a button to automate the word mail merge process - at least that is what we use this script for - have removed the Word specific code here, I hope someone finds this useful. Any comments or suggestions welcome it's my first post 
  */
 
 
@@ -21,7 +20,7 @@ return
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Setting up vars: ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-InitialSetup:
+InitialSetup: ;load from paths.ini. Does this use loads of memory? doesn't seem to slow anything down...
 IniRead, Button1Title, paths.ini , Button1Title, key
 IniRead, Button2Title, paths.ini , Button2Title, key
 IniRead, Button3Title, paths.ini , Button3Title, key
@@ -51,57 +50,57 @@ Return
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;GUI SECTION;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 GUIStart:
 Gui, Font, s16  ; Set a large font size (32-point)., 
-Gui, Add, Tab, x12 y10 w1190 h500 , Corporate Adult|Corporate Family|Fire Electric|School Charity Church|Wedding|Private|Mostly Jazz|Misc Other
-Gui, Tab, Corporate Adult
+Gui, Add, Tab, x12 y10 w1190 h500 , Tab 1|Tab 2|Tab 3|Tab 4|Tab 5|Tab 6|Tab 7|Tab 8 ; call these whatever suits you
+Gui, Tab, Tab 1
 Gui, Add, Button, x32 y80 w350 h70 gButton1 , %Button1Title% ;1
 Gui, Add, Button, x500 y80 w100 h40 gButtonCHANGE1 , CHANGE ; path change button1
 Gui, Add, Button, x22 y200 w330 h70 gButton2 , %Button2Title% ;2
 Gui, Add, Button, x500 y200 w100 h40 gButtonCHANGE2 , CHANGE ; path change button2
 Gui, Add, Button, x22 y320 w680 h90 gButton3 , %Button3Title%  ;3
 Gui, Add, Button, x800 y320 w100 h40 gButtonCHANGE3 , CHANGE ; path change button3
-Gui, Tab, Corporate Family
+Gui, Tab, Tab 2
 Gui, Add, Button, x32 y80 w350 h70 gButton4 , %Button4Title% ;4
 Gui, Add, Button, x500 y80 w100 h40 gButtonCHANGE4 , CHANGE ; path change button4
 Gui, Add, Button, x22 y200 w330 h70 gButton5 , %Button5Title% ;5
 Gui, Add, Button, x500 y200 w100 h40 gButtonCHANGE5 , CHANGE ; path change button5
 Gui, Add, Button, x22 y320 w680 h90 gButton6 , %Button6Title%  ;6
 Gui, Add, Button, x800 y320 w100 h40 gButtonCHANGE6 , CHANGE ; path change button6
-Gui, Tab, Fire Electric
+Gui, Tab, Tab 3
 Gui, Add, Button, x32 y80 w350 h70 gButton7 , %Button7Title% ;7
 Gui, Add, Button, x500 y80 w100 h40 gButtonCHANGE7 , CHANGE ; path change button1
 Gui, Add, Button, x22 y200 w330 h70 gButton8 , %Button8Title% ;8
 Gui, Add, Button, x500 y200 w100 h40 gButtonCHANGE8 , CHANGE ; path change button2
 Gui, Add, Button, x22 y320 w680 h90 gButton9 , %Button9Title%  ;9
 Gui, Add, Button, x800 y320 w100 h40 gButtonCHANGE9 , CHANGE ; path change button3
-Gui, Tab, School Charity Church
+Gui, Tab, Tab 4
 Gui, Add, Button, x32 y80 w350 h70 gButton10 , %Button10Title% ;10
 Gui, Add, Button, x500 y80 w100 h40 gButtonCHANGE10 , CHANGE ; path change button10
 Gui, Add, Button, x22 y200 w330 h70 gButton11 , %Button11Title% ;11
 Gui, Add, Button, x500 y200 w100 h40 gButtonCHANGE11, CHANGE ; path change button11
 Gui, Add, Button, x22 y320 w680 h90 gButton12 , %Button8Title%  ;12
 Gui, Add, Button, x800 y320 w100 h40 gButtonCHANGE12 , CHANGE ; path change button12
-Gui, Tab, Wedding
+Gui, Tab, Tab 5
 Gui, Add, Button, x32 y80 w350 h70 gButton13 , %Button1Title% ;13
 Gui, Add, Button, x500 y80 w100 h40 gButtonCHANGE13 , CHANGE ; path change button13
 Gui, Add, Button, x22 y200 w330 h70 gButton14, %Button2Title% ;14
 Gui, Add, Button, x500 y200 w100 h40 gButtonCHANGE14, CHANGE ; path change button14
 Gui, Add, Button, x22 y320 w680 h90 gButton15 , %Button3Title%  ;15
 Gui, Add, Button, x800 y320 w100 h40 gButtonCHANGE15 , CHANGE ; path change button15
-Gui, Tab, Private
+Gui, Tab, Tab 6
 Gui, Add, Button, x32 y80 w350 h70 gButton16 , %Button1Title% ;16
 Gui, Add, Button, x500 y80 w100 h40 gButtonCHANGE16 , CHANGE ; path change button16
 Gui, Add, Button, x22 y200 w330 h70 gButton17 , %Button2Title% ;17
 Gui, Add, Button, x500 y200 w100 h40 gButtonCHANGE17 , CHANGE ; path change button17
 Gui, Add, Button, x22 y320 w680 h90 gButton18 , %Button3Title%  ;18
 Gui, Add, Button, x800 y320 w100 h40 gButtonCHANGE18 , CHANGE ; path change button18
-Gui, Tab, Mostly Jazz
+Gui, Tab, Tab 7
 Gui, Add, Button, x32 y80 w350 h70 gButton19 , %Button1Title% ;19
 Gui, Add, Button, x500 y80 w100 h40 gButtonCHANGE19, CHANGE ; path change button19
 Gui, Add, Button, x22 y200 w330 h70 gButton20 , %Button2Title% ;20
 Gui, Add, Button, x500 y200 w100 h40 gButtonCHANGE20, CHANGE ; path change button20
 Gui, Add, Button, x22 y320 w680 h90 gButton21 , %Button3Title%  ;21
 Gui, Add, Button, x800 y320 w100 h40 gButtonCHANGE21, CHANGE ; path change button21
-Gui, Tab, Misc Other
+Gui, Tab, Tab 8
 Gui, Add, Button, x32 y80 w350 h70 gButton22 , %Button1Title% ;22
 Gui, Add, Button, x500 y80 w100 h40 gButtonCHANGE22, CHANGE ; path change button22
 Gui, Add, Button, x22 y200 w330 h70 gButton23 , %Button2Title% ;23
@@ -653,7 +652,7 @@ return
 
 
 PathChooser: ; should set "path" variable to the mail merge path
-FileSelectFile, path , 3, C:\Dropbox\Big Top Entertainment\Templates , Select the Mail Merge to use for this option! , ; "path" variable is set to path of selected mail merge!
+FileSelectFile, path , 3, C:\ , Select the File to open for this option! , ; "path" variable is set to path of selected mail merge!
 If path != 					; if a mail merge is chosen (path variable is not blank)
 	{
 	gosub, PathWriter
@@ -670,47 +669,15 @@ PathWriter: ; should take variable "path" and iniwrite to the correct slot - sho
 IniWrite, %path%, paths.ini , %inikey%, key
 return
 
-MailMergeMacro:
-xl :=   ComObj("Excel.Application")
-;MsgBox % xl.ActiveCell.Row
-clipboard = % xl.ActiveCell.Row 
-EnvSub, Clipboard, 1 ;subtracts 1 
-; paste and you get the active row!!!!!
+MailMergeMacro: ; this function throws an error if no excel worksheet is open (not something that happens in our office)
 sleep, 100
 run, %path%
 sleep, 200
-;WinGet, active_id, ID, A
-;WinMaximize, ahk_id %active_id% 		; test code - maximizes window
-;MsgBox, The active window's ID is "%active_id%". ; test code
-winwait, ahk_class #32770
-send, y 
-sleep, 200
 WinGet, active_id, ID, A
-;WinMaximize, ahk_id %active_id% ;test code - maximizes window
-;MsgBox, The active window's ID is "%active_id%". test code
 winwait, ahk_id %active_id% ;********************** using window id from WinGet *****************
 WinMaximize, ahk_id %active_id%    ; use the window found above
-
-;START OF NON-OPTIMAL CODE
-
-SLEEP, 1000
-
-WinWait, ahk_id %active_id%, 
-IfWinNotActive, ahk_id %active_id%, , WinActivate, ahk_id %active_id%, 
-WinWaitActive, ahk_id %active_id%, 
-sleep, 400
-MouseClick, left,  389,  40
-Sleep, 100
-MouseClick, left,  785,  68
-Sleep, 1000
-MouseClick, left,  785,  68
-Send, {CTRLDOWN}v{CTRLUP}
-Sleep, 100
-MouseClick, left,  692,  89
-Sleep, 200
+;add your own code here 
 ExitApp
-*/
-
 return
 
 
