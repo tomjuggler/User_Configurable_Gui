@@ -3,7 +3,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;Description;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
  /*
- GUI program in which the User can change the button title and function (which file the button opens) by use of an adjacent "change" button on GUI (saves to paths.ini file in script directory). Useful for frequently changed options and so that the programmer (me) doesn't have to change the code every time a word doc is moved or renamed. The MailMerge function is called upon pressing a button to automate the word mail merge process - at least that is what we use this script for - have removed the Word specific code here, I hope someone finds this useful. Any comments or suggestions welcome it's my first post 
+  GUI program in which the User can change the button title and function (which file the button opens) by use of an adjacent "change" button on GUI (saves to paths.ini file in script directory). Useful for frequently changed options and so that the programmer (me) doesn't have to change the code every time a word doc is moved or renamed. The MailMerge function is called upon pressing a button to automate the word mail merge process - at least that is what we use this script for - I have removed the Word specific code here. I hope someone finds this useful. Any comments or suggestions welcome it's my first post 
  */
 
 
