@@ -675,7 +675,7 @@ run, %path%
 sleep, 200
 WinGet, active_id, ID, A
 winwait, ahk_id %active_id% ;********************** using window id from WinGet *****************
-WinMaximize, ahk_id %active_id%    ; use the window found above
+WinMaximize, ahk_id %active_id%    ; maximize the window found above, just example code
 ;add your own code here 
 ExitApp
 return
