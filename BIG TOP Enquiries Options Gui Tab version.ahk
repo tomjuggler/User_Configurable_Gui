@@ -3,7 +3,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;Description;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
  /*
-  GUI program in which the User can change the button title and function (which file the button opens) by use of an adjacent "change" button on GUI (saves to paths.ini file in script directory). Useful for frequently changed options and so that the programmer (me) doesn't have to change the code every time a word doc is moved or renamed. The MailMerge function is called upon pressing a button to automate the word mail merge process - at least that is what we use this script for - I have removed the Word specific code here. I hope someone finds this useful. Any comments or suggestions welcome it's my first post 
+  GUI program in which the User can change the button title and function (which file the button opens) by use of an adjacent "change" button on GUI (saves to paths.ini file in script directory). Useful for frequently changed options and so that the programmer (me) doesn't have to change the code every time a word doc is moved or renamed. The ButtonPressed function is called upon pressing a button to automate the word mail merge process - at least that is what we use this script for - I have removed the Word specific code here. I hope someone finds this useful. Any comments or suggestions welcome it's my first post 
  */
 
 
@@ -77,35 +77,35 @@ Gui, Add, Button, x32 y80 w350 h70 gButton10 , %Button10Title% ;10
 Gui, Add, Button, x500 y80 w100 h40 gButtonCHANGE10 , CHANGE ; path change button10
 Gui, Add, Button, x22 y200 w330 h70 gButton11 , %Button11Title% ;11
 Gui, Add, Button, x500 y200 w100 h40 gButtonCHANGE11, CHANGE ; path change button11
-Gui, Add, Button, x22 y320 w680 h90 gButton12 , %Button8Title%  ;12
+Gui, Add, Button, x22 y320 w680 h90 gButton12 , %Button12Title%  ;12
 Gui, Add, Button, x800 y320 w100 h40 gButtonCHANGE12 , CHANGE ; path change button12
 Gui, Tab, Tab 5
-Gui, Add, Button, x32 y80 w350 h70 gButton13 , %Button1Title% ;13
+Gui, Add, Button, x32 y80 w350 h70 gButton13 , %Button13Title% ;13
 Gui, Add, Button, x500 y80 w100 h40 gButtonCHANGE13 , CHANGE ; path change button13
-Gui, Add, Button, x22 y200 w330 h70 gButton14, %Button2Title% ;14
+Gui, Add, Button, x22 y200 w330 h70 gButton14, %Button14Title% ;14
 Gui, Add, Button, x500 y200 w100 h40 gButtonCHANGE14, CHANGE ; path change button14
-Gui, Add, Button, x22 y320 w680 h90 gButton15 , %Button3Title%  ;15
+Gui, Add, Button, x22 y320 w680 h90 gButton15 , %Button15Title%  ;15
 Gui, Add, Button, x800 y320 w100 h40 gButtonCHANGE15 , CHANGE ; path change button15
 Gui, Tab, Tab 6
-Gui, Add, Button, x32 y80 w350 h70 gButton16 , %Button1Title% ;16
+Gui, Add, Button, x32 y80 w350 h70 gButton16 , %Button16Title% ;16
 Gui, Add, Button, x500 y80 w100 h40 gButtonCHANGE16 , CHANGE ; path change button16
-Gui, Add, Button, x22 y200 w330 h70 gButton17 , %Button2Title% ;17
+Gui, Add, Button, x22 y200 w330 h70 gButton17 , %Button17Title% ;17
 Gui, Add, Button, x500 y200 w100 h40 gButtonCHANGE17 , CHANGE ; path change button17
-Gui, Add, Button, x22 y320 w680 h90 gButton18 , %Button3Title%  ;18
+Gui, Add, Button, x22 y320 w680 h90 gButton18 , %Button18Title%  ;18
 Gui, Add, Button, x800 y320 w100 h40 gButtonCHANGE18 , CHANGE ; path change button18
 Gui, Tab, Tab 7
-Gui, Add, Button, x32 y80 w350 h70 gButton19 , %Button1Title% ;19
+Gui, Add, Button, x32 y80 w350 h70 gButton19 , %Button19Title% ;19
 Gui, Add, Button, x500 y80 w100 h40 gButtonCHANGE19, CHANGE ; path change button19
-Gui, Add, Button, x22 y200 w330 h70 gButton20 , %Button2Title% ;20
+Gui, Add, Button, x22 y200 w330 h70 gButton20 , %Button20Title% ;20
 Gui, Add, Button, x500 y200 w100 h40 gButtonCHANGE20, CHANGE ; path change button20
-Gui, Add, Button, x22 y320 w680 h90 gButton21 , %Button3Title%  ;21
+Gui, Add, Button, x22 y320 w680 h90 gButton21 , %Button21Title%  ;21
 Gui, Add, Button, x800 y320 w100 h40 gButtonCHANGE21, CHANGE ; path change button21
 Gui, Tab, Tab 8
-Gui, Add, Button, x32 y80 w350 h70 gButton22 , %Button1Title% ;22
+Gui, Add, Button, x32 y80 w350 h70 gButton22 , %Button22Title% ;22
 Gui, Add, Button, x500 y80 w100 h40 gButtonCHANGE22, CHANGE ; path change button22
-Gui, Add, Button, x22 y200 w330 h70 gButton23 , %Button2Title% ;23
+Gui, Add, Button, x22 y200 w330 h70 gButton23 , %Button23Title% ;23
 Gui, Add, Button, x500 y200 w100 h40 gButtonCHANGE23, CHANGE ; path change button23
-Gui, Add, Button, x22 y320 w680 h90 gButton24 , %Button3Title%  ;24
+Gui, Add, Button, x22 y320 w680 h90 gButton24 , %Button24Title%  ;24
 Gui, Add, Button, x800 y320 w100 h40 gButtonCHANGE24, CHANGE ; path change button24
 ; Generated using SmartGUI Creator 4.0
 Gui, Show, x40 y 51 h560 w1223, BIG TOP ENTERTAINMENT email template options
@@ -116,7 +116,7 @@ return
 
 Button1:
 IniRead, path, paths.ini , Button1_path, key ;this button mail merge path into variable "path"
-gosub, MailMergeMacro
+gosub, ButtonPressed
 ExitApp
 return
 
@@ -126,19 +126,19 @@ Gosub, PathChooser
 sleep, 40
 inikey = Button1Title ; ditto above this time button title gets changed
 gosub, UserButtonChanger
-If path != 					; if a mail merge is chosen (path variable is not blank)
+If path != 					; if  (path variable is not blank)
 	{
 	Reload
 	}
 Else 
 	{
-	return					; if nothing chosen do nothing
+	return					;  do nothing
 	}
 Return
 
 Button2:
 IniRead, path, paths.ini , Button2_path, key ;this button mail merge path into variable "path"
-gosub, MailMergeMacro
+gosub, ButtonPressed
 ExitApp
 return
 
@@ -148,19 +148,19 @@ Gosub, PathChooser
 sleep, 40
 inikey = Button2Title ; ditto above this time button title gets changed
 gosub, UserButtonChanger
-If path != 					; if a mail merge is chosen (path variable is not blank)
+If path != 					; if  (path variable is not blank)
 	{
 	Reload
 	}
 Else 
 	{
-	return					; if nothing chosen do nothing
+	return					; do nothing
 	}
 Return
 
 Button3:
 IniRead, path, paths.ini , Button3_path, key ;this button mail merge path into variable "path"
-gosub, MailMergeMacro
+gosub, ButtonPressed
 ExitApp
 return
 
@@ -170,19 +170,19 @@ Gosub, PathChooser
 sleep, 40
 inikey = Button3Title ; ditto above this time button title gets changed
 gosub, UserButtonChanger
-If path != 					; if a mail merge is chosen (path variable is not blank)
+If path != 					; if  (path variable is not blank)
 	{
 	Reload
 	}
 Else 
 	{
-	return					; if nothing chosen do nothing
+	return					; do nothing
 	}
 Return
 
 Button4:
 IniRead, path, paths.ini , Button4_path, key ;this button mail merge path into variable "path"
-gosub, MailMergeMacro
+gosub, ButtonPressed
 ExitApp
 return
 
@@ -192,19 +192,19 @@ Gosub, PathChooser
 sleep, 40
 inikey = Button4Title ; ditto above this time button title gets changed
 gosub, UserButtonChanger
-If path != 					; if a mail merge is chosen (path variable is not blank)
+If path != 					; if (path variable is not blank)
 	{
 	Reload
 	}
 Else 
 	{
-	return					; if nothing chosen do nothing
+	return					;  do nothing
 	}
 Return
 
 Button5:
 IniRead, path, paths.ini , Button5_path, key ;this button mail merge path into variable "path"
-gosub, MailMergeMacro
+gosub, ButtonPressed
 ExitApp
 return
 
@@ -214,19 +214,19 @@ Gosub, PathChooser
 sleep, 40
 inikey = Button5Title ; ditto above this time button title gets changed
 gosub, UserButtonChanger
-If path != 					; if a mail merge is chosen (path variable is not blank)
+If path != 					; if (path variable is not blank)
 	{
 	Reload
 	}
 Else 
 	{
-	return					; if nothing chosen do nothing
+	return					;  do nothing
 	}
 Return
 
 Button6:
 IniRead, path, paths.ini , Button6_path, key ;this button mail merge path into variable "path"
-gosub, MailMergeMacro
+gosub, ButtonPressed
 ExitApp
 return
 
@@ -236,19 +236,19 @@ Gosub, PathChooser
 sleep, 40
 inikey = Button6Title ; ditto above this time button title gets changed
 gosub, UserButtonChanger
-If path != 					; if a mail merge is chosen (path variable is not blank)
+If path != 					; if (path variable is not blank)
 	{
 	Reload
 	}
 Else 
 	{
-	return					; if nothing chosen do nothing
+	return					;  do nothing
 	}
 Return
 
 Button7:
 IniRead, path, paths.ini , Button7_path, key ;this button mail merge path into variable "path"
-gosub, MailMergeMacro
+gosub, ButtonPressed
 ExitApp
 return
 
@@ -258,19 +258,19 @@ Gosub, PathChooser
 sleep, 40
 inikey = Button7Title ; ditto above this time button title gets changed
 gosub, UserButtonChanger
-If path != 					; if a mail merge is chosen (path variable is not blank)
+If path != 					; if  (path variable is not blank)
 	{
 	Reload
 	}
 Else 
 	{
-	return					; if nothing chosen do nothing
+	return					;  do nothing
 	}
 Return
 
 Button8:
 IniRead, path, paths.ini , Button8_path, key ;this button mail merge path into variable "path"
-gosub, MailMergeMacro
+gosub, ButtonPressed
 ExitApp
 return
 
@@ -280,19 +280,19 @@ Gosub, PathChooser
 sleep, 40
 inikey = Button8Title ; ditto above this time button title gets changed
 gosub, UserButtonChanger
-If path != 					; if a mail merge is chosen (path variable is not blank)
+If path != 					;  (path variable is not blank)
 	{
 	Reload
 	}
 Else 
 	{
-	return					; if nothing chosen do nothing
+	return					; do nothing
 	}
 Return
 
 Button9:
 IniRead, path, paths.ini , Button9_path, key ;this button mail merge path into variable "path"
-gosub, MailMergeMacro
+gosub, ButtonPressed
 ExitApp
 return
 
@@ -302,19 +302,19 @@ Gosub, PathChooser
 sleep, 40
 inikey = Button9Title ; ditto above this time button title gets changed
 gosub, UserButtonChanger
-If path != 					; if a mail merge is chosen (path variable is not blank)
+If path != 					; if (path variable is not blank)
 	{
 	Reload
 	}
 Else 
 	{
-	return					; if nothing chosen do nothing
+	return					;  do nothing
 	}
 Return
 
 Button10:
 IniRead, path, paths.ini , Button10_path, key ;this button mail merge path into variable "path"
-gosub, MailMergeMacro
+gosub, ButtonPressed
 ExitApp
 return
 
@@ -324,19 +324,19 @@ Gosub, PathChooser
 sleep, 40
 inikey = Button10Title ; ditto above this time button title gets changed
 gosub, UserButtonChanger
-If path != 					; if a mail merge is chosen (path variable is not blank)
+If path != 					; if  (path variable is not blank)
 	{
 	Reload
 	}
 Else 
 	{
-	return					; if nothing chosen do nothing
+	return					;  do nothing
 	}
 Return
 
 Button11:
 IniRead, path, paths.ini , Button11_path, key ;this button mail merge path into variable "path"
-gosub, MailMergeMacro
+gosub, ButtonPressed
 ExitApp
 return
 
@@ -346,19 +346,19 @@ Gosub, PathChooser
 sleep, 40
 inikey = Button11Title ; ditto above this time button title gets changed
 gosub, UserButtonChanger
-If path != 					; if a mail merge is chosen (path variable is not blank)
+If path != 					;  (path variable is not blank)
 	{
 	Reload
 	}
 Else 
 	{
-	return					; if nothing chosen do nothing
+	return					;  do nothing
 	}
 Return
 
 Button12:
 IniRead, path, paths.ini , Button12_path, key ;this button mail merge path into variable "path"
-gosub, MailMergeMacro
+gosub, ButtonPressed
 ExitApp
 return
 
@@ -368,19 +368,19 @@ Gosub, PathChooser
 sleep, 40
 inikey = Button12Title ; ditto above this time button title gets changed
 gosub, UserButtonChanger
-If path != 					; if a mail merge is chosen (path variable is not blank)
+If path != 					; if  (path variable is not blank)
 	{
 	Reload
 	}
 Else 
 	{
-	return					; if nothing chosen do nothing
+	return					;  do nothing
 	}
 Return
 
 Button13:
 IniRead, path, paths.ini , Button13_path, key ;this button mail merge path into variable "path"
-gosub, MailMergeMacro
+gosub, ButtonPressed
 ExitApp
 return
 
@@ -390,19 +390,19 @@ Gosub, PathChooser
 sleep, 40
 inikey = Button13Title ; ditto above this time button title gets changed
 gosub, UserButtonChanger
-If path != 					; if a mail merge is chosen (path variable is not blank)
+If path != 					; if (path variable is not blank)
 	{
 	Reload
 	}
 Else 
 	{
-	return					; if nothing chosen do nothing
+	return					; do nothing
 	}
 Return
 
 Button14:
 IniRead, path, paths.ini , Button14_path, key ;this button mail merge path into variable "path"
-gosub, MailMergeMacro
+gosub, ButtonPressed
 ExitApp
 return
 
@@ -412,19 +412,19 @@ Gosub, PathChooser
 sleep, 40
 inikey = Button14Title ; ditto above this time button title gets changed
 gosub, UserButtonChanger
-If path != 					; if a mail merge is chosen (path variable is not blank)
+If path != 					; (path variable is not blank)
 	{
 	Reload
 	}
 Else 
 	{
-	return					; if nothing chosen do nothing
+	return					; do nothing
 	}
 Return
 
 Button15:
 IniRead, path, paths.ini , Button15_path, key ;this button mail merge path into variable "path"
-gosub, MailMergeMacro
+gosub, ButtonPressed
 ExitApp
 return
 
@@ -434,19 +434,19 @@ Gosub, PathChooser
 sleep, 40
 inikey = Button15Title ; ditto above this time button title gets changed
 gosub, UserButtonChanger
-If path != 					; if a mail merge is chosen (path variable is not blank)
+If path != 					; (path variable is not blank)
 	{
 	Reload
 	}
 Else 
 	{
-	return					; if nothing chosen do nothing
+	return					;  do nothing
 	}
 Return
 
 Button16:
 IniRead, path, paths.ini , Button16_path, key ;this button mail merge path into variable "path"
-gosub, MailMergeMacro
+gosub, ButtonPressed
 ExitApp
 return
 
@@ -456,19 +456,19 @@ Gosub, PathChooser
 sleep, 40
 inikey = Button16Title ; ditto above this time button title gets changed
 gosub, UserButtonChanger
-If path != 					; if a mail merge is chosen (path variable is not blank)
+If path != 					; if (path variable is not blank)
 	{
 	Reload
 	}
 Else 
 	{
-	return					; if nothing chosen do nothing
+	return					; do nothing
 	}
 Return
 
 Button17:
 IniRead, path, paths.ini , Button17_path, key ;this button mail merge path into variable "path"
-gosub, MailMergeMacro
+gosub, ButtonPressed
 ExitApp
 return
 
@@ -478,19 +478,19 @@ Gosub, PathChooser
 sleep, 40
 inikey = Button17Title ; ditto above this time button title gets changed
 gosub, UserButtonChanger
-If path != 					; if a mail merge is chosen (path variable is not blank)
+If path != 					; if  (path variable is not blank)
 	{
 	Reload
 	}
 Else 
 	{
-	return					; if nothing chosen do nothing
+	return					;  do nothing
 	}
 Return
 
 Button18:
 IniRead, path, paths.ini , Button18_path, key ;this button mail merge path into variable "path"
-gosub, MailMergeMacro
+gosub, ButtonPressed
 ExitApp
 return
 
@@ -500,19 +500,19 @@ Gosub, PathChooser
 sleep, 40
 inikey = Button18Title ; ditto above this time button title gets changed
 gosub, UserButtonChanger
-If path != 					; if a mail merge is chosen (path variable is not blank)
+If path != 					; if  (path variable is not blank)
 	{
 	Reload
 	}
 Else 
 	{
-	return					; if nothing chosen do nothing
+	return					;  do nothing
 	}
 Return
 
 Button19:
 IniRead, path, paths.ini , Button19_path, key ;this button mail merge path into variable "path"
-gosub, MailMergeMacro
+gosub, ButtonPressed
 ExitApp
 return
 
@@ -522,19 +522,19 @@ Gosub, PathChooser
 sleep, 40
 inikey = Button19Title ; ditto above this time button title gets changed
 gosub, UserButtonChanger
-If path != 					; if a mail merge is chosen (path variable is not blank)
+If path != 					; if  (path variable is not blank)
 	{
 	Reload
 	}
 Else 
 	{
-	return					; if nothing chosen do nothing
+	return					;  do nothing
 	}
 Return
 
 Button20:
 IniRead, path, paths.ini , Button20_path, key ;this button mail merge path into variable "path"
-gosub, MailMergeMacro
+gosub, ButtonPressed
 ExitApp
 return
 
@@ -544,19 +544,19 @@ Gosub, PathChooser
 sleep, 40
 inikey = Button20Title ; ditto above this time button title gets changed
 gosub, UserButtonChanger
-If path != 					; if a mail merge is chosen (path variable is not blank)
+If path != 					; if (path variable is not blank)
 	{
 	Reload
 	}
 Else 
 	{
-	return					; if nothing chosen do nothing
+	return					;  do nothing
 	}
 Return
 
 Button21:
 IniRead, path, paths.ini , Button21_path, key ;this button mail merge path into variable "path"
-gosub, MailMergeMacro
+gosub, ButtonPressed
 ExitApp
 return
 
@@ -566,19 +566,19 @@ Gosub, PathChooser
 sleep, 40
 inikey = Button21Title ; ditto above this time button title gets changed
 gosub, UserButtonChanger
-If path != 					; if a mail merge is chosen (path variable is not blank)
+If path != 					; if path variable is not blank)
 	{
 	Reload
 	}
 Else 
 	{
-	return					; if nothing chosen do nothing
+	return					;  do nothing
 	}
 Return
 
 Button22:
 IniRead, path, paths.ini , Button22_path, key ;this button mail merge path into variable "path"
-gosub, MailMergeMacro
+gosub, ButtonPressed
 ExitApp
 return
 
@@ -588,19 +588,19 @@ Gosub, PathChooser
 sleep, 40
 inikey = Button22Title ; ditto above this time button title gets changed
 gosub, UserButtonChanger
-If path != 					; if a mail merge is chosen (path variable is not blank)
+If path != 					; if path variable is not blank)
 	{
 	Reload
 	}
 Else 
 	{
-	return					; if nothing chosen do nothing
+	return					; do nothing
 	}
 Return
 
 Button23:
 IniRead, path, paths.ini , Button23_path, key ;this button mail merge path into variable "path"
-gosub, MailMergeMacro
+gosub, ButtonPressed
 ExitApp
 return
 
@@ -610,19 +610,19 @@ Gosub, PathChooser
 sleep, 40
 inikey = Button23Title ; ditto above this time button title gets changed
 gosub, UserButtonChanger
-If path != 					; if a mail merge is chosen (path variable is not blank)
+If path != 					; if path variable is not blank)
 	{
 	Reload
 	}
 Else 
 	{
-	return					; if nothing chosen do nothing
+	return					; do nothing
 	}
 Return
 
 Button24:
 IniRead, path, paths.ini , Button24_path, key ;this button mail merge path into variable "path"
-gosub, MailMergeMacro
+gosub, ButtonPressed
 ExitApp
 return
 
@@ -632,13 +632,13 @@ Gosub, PathChooser
 sleep, 40
 inikey = Button24Title ; ditto above this time button title gets changed
 gosub, UserButtonChanger
-If path != 					; if a mail merge is chosen (path variable is not blank)
+If path != 					; if path variable is not blank)
 	{
 	Reload
 	}
 Else 
 	{
-	return					; if nothing chosen do nothing
+	return					; do nothing
 	}
 Return
 
@@ -669,7 +669,7 @@ PathWriter: ; should take variable "path" and iniwrite to the correct slot - sho
 IniWrite, %path%, paths.ini , %inikey%, key
 return
 
-MailMergeMacro: ; this function throws an error if no excel worksheet is open (not something that happens in our office)
+ButtonPressed: ; currently set to maximize the window, add your own code here (called every time a button is pressed, so only really useable if you are doing the same type of thing every time, eg: dealing with a mail merge
 sleep, 100
 run, %path%
 sleep, 200
@@ -687,4 +687,4 @@ return
 GuiClose:
 ExitApp
 
-Esc::ExitApp
+Esc::ExitApp ; I use this in every script, helpful when you get stuck and need to exit
